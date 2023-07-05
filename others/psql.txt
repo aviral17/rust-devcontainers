@@ -16,3 +16,13 @@ B) Now exporting Environment variable -------> export DATABASE_URL=postgres://po
 -------
 
 C) Inside ``crates`` folder, run ---> dbmate status    and to apply pending migrations to the database, run  `dbmate up`
+
+---------- ****************************** --------------------------------------  ******************************** ---------------------------------------------------------------------------------
+
+DATABASE_ACCESS
+
+Cornucopia is a code generator that takes small snippets of SQL and turns them into Rust functions.
+We'll turn our crates/db folder into a crate so we can keep all our database logic in one place.
+
+LINK ----------------->  https://rust-on-nails.com/docs/database-part-1/database-access/ ,  {{ github  updated link -------->  https://github.com/purton-tech/rust-on-nails/blob/main/rust-on-nails.com/content/docs/database-part-1/database-access.md
+
