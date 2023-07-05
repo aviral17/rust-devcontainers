@@ -1,0 +1,18 @@
+For running postgresql (or psql) ----> cd .devcontainer --------> docker-compose exec db psql -U postgres   OR  docker-compose -f .devcontainer/docker-compose.yml exec db psql -U postgres [This 2nd method not working for me, but you may try]
+
+----*******-----------------************
+
+Running the image specified in docker-compose.yml file --------->
+
+A) Inside ROOT folder, run -----> docker run -p 5432:5432 -e POSTGRES_PASSWORD=testpassword -e POSTGRES_HOST_AUTH_METHOD=trust postgres:14-alpine
+B) open new Terminal now and run the rest of the below commands there
+
+----*******-----------------************
+
+NOTE: Both commands running in the ROOT directory
+A) To run postgres after setting host along with 5432 port (which is of postgres)  ------->  psql -U postgres -h localhost -p 5432
+B) Now exporting Environment variable -------> export DATABASE_URL=postgres://postgres:testpassword@localhost:5432/postgres?sslmode=disable
+
+-------
+
+C) Inside ``crates`` folder, run ---> dbmate status    and to apply pending migrations to the database, run  `dbmate up`
