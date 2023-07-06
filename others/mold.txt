@@ -1,0 +1,59 @@
+WE can run mold from anywhere so its better to keep outside of the project files, so I chose the ROOT folder and ran all the commands  and after running all the commands, I created .cargo/config.toml file inside rust  axum-server folder  and then pasted the following --------->
+
+[target.x86_64-unknown-linux-gnu]
+linker = "clang"
+rustflags = ["-C", "link-arg=-fuse-ld=/path/to/mold"]
+
+where path = absolute path, you can get from using the command which mold inside mold/build folder or anywhere ````````````
+
+---------------- ********************************** -----------------------------------------------------------------------------------------------------------------------------------------------
+
+For mold installation, I used the following commands from the following github link -------> 👉 https://github.com/rui314/mold#how-to-use
+
+---------------- ********************************** -----------------------------------------------------------------------------------------------------------------------------------------------
+
+For Clang, use ---------->  
+
+sudo apt-get update
+sudo apt-get install clang
+
+
+I got problem in installing the last 2 commands of the above mold installation, i.e., my C++ and gcc not updated to version 10 so I used the following commands: ------------>
+[[[[[[[[[[[[  
+    
+        If running `sudo apt-get install build-essential` did not update your C++ compiler to a version that supports C++20, you may need to take additional steps to install a more recent version of the compiler.
+
+One way to do this is to add a Personal Package Archive (PPA) that provides more recent versions of the `gcc` and `g++` compilers. A PPA is a repository of software packages that you can add to your system to install software that is not available in the official Ubuntu repositories.
+
+For example, you can add the `ubuntu-toolchain-r/test` PPA to your system by running the following commands:
+
+```
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt-get update
+```
+
+After adding this PPA, you can install a more recent version of the `gcc` and `g++` compilers by running the `apt-get install` command with the specific version of the compilers that you want to install. For example, to install version 10 of the compilers, you can run the following command:
+
+```
+sudo apt-get install gcc-10 g++-10
+```
+
+After installing a more recent version of the compilers, you may need to update your system's default C++ compiler to use the new version. You can do this by running the `update-alternatives` command like this:
+
+```
+sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-10 60
+```
+
+This command will update your system's default C++ compiler (`c++`) to use version 10 of the `g++` compiler (`/usr/bin/g++-10`). The `60` at the end of the command specifies the priority of this alternative, with higher numbers indicating higher priority.
+
+After updating your system's default C++ compiler, you can check the version of the compiler by running the `c++ --version` command again. If the version of the compiler has been updated to a version that supports C++20, you should be able to build Mold successfully.
+
+I hope this helps clarify how to update your C++ compiler on Ubuntu to a version that supports C++20. Is there anything else you would like to know? 😊
+
+Source: Conversation with Bing, 6/7/2023
+(1) How to Install GCC(C and C++ Compiler) on Ubuntu 20.04 LTS. https://www.cyberithub.com/how-to-install-gcc-c-compiler-on-ubuntu-20-04-lts/.
+(2) How to install G++ the C++ compiler on Ubuntu 20.04 LTS Focal Fossa .... https://linuxconfig.org/how-to-install-g-the-c-compiler-on-ubuntu-20-04-lts-focal-fossa-linux.
+(3) How to install GCC the C compiler on Ubuntu 20.04 LTS Focal Fossa Linux. https://linuxconfig.org/how-to-install-gcc-the-c-compiler-on-ubuntu-20-04-lts-focal-fossa-linux.
+(4) How to install C++ compiler on Ubuntu 20.04. https://unixcop.com/how-to-install-c-compiler-on-ubuntu-20-04-2/.          
+
+ ]]]]]]]]]]]]

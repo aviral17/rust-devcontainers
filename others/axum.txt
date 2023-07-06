@@ -1,0 +1,17 @@
+Make sure we're in the crates/axum-server folder and add Axum to our Cargo.toml using the following command.
+
+STEPS -------> 
+
+cargo add axum
+cargo add tokio --no-default-features -F tokio/macros,tokio/fs,tokio/rt-multi-thread
+cargo add --path ../db
+
+{{ NOTE for cargo add --path ../db --------------->  The command cargo add --path ../db is used to add a local dependency to a Rust project. This command is part of the cargo-edit package, which provides additional subcommands for the cargo command line tool.
+
+In this case, the command is adding a dependency on a local package located in the ../db directory, relative to the current working directory. This means that the package being added as a dependency is located in the db directory, one level above the current working directory.
+
+The --path option specifies the path to the local package that should be added as a dependency. When this option is used, cargo will add a dependency on the package located at the specified path, rather than searching for a package with the same name on crates.io.
+
+This command can be useful when you are working on multiple related packages and want to use one package as a dependency in another package without publishing it to crates.io  AS normally we use crago add to extract packages from cartes.io,  here we are extracting locally from cargo.toml inside db/ folder for using dependencies related to postgresql. By adding a local dependency, you can use the latest version of the package without having to publish it first.
+
+

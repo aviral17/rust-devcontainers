@@ -8,7 +8,7 @@ use rustls::client::{ServerCertVerified, ServerCertVerifier};
 use rustls::ServerName;
 pub use tokio_postgres::Error as TokioPostgresError;
 
-pub use queries::users::User;
+pub use queries::users::User;  // check include!() below
 
 pub fn create_pool(database_url: &str) -> deadpool_postgres::Pool {
     let config = tokio_postgres::Config::from_str(database_url).unwrap();
@@ -44,7 +44,7 @@ impl ServerCertVerifier for DummyTlsVerifier {
     }
 }
 
-include!(concat!(env!("OUT_DIR"), "/cornucopia.rs"));
+include!(concat!(env!("OUT_DIR"), "/cornucopia.rs")); // the cornucopia generated code is being included which is of queries/users.sql
 
 #[cfg(test)]
 mod tests {
