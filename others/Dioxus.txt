@@ -1,0 +1,8 @@
+https://dioxuslabs.com/docs/0.3/guide/en/getting_started/web.html
+https://rust-on-nails.com/docs/full-stack-web/server-side-components/
+
+The Dioxus framework gives us the capability to build user interfaces out of components which can be rendered server side
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Adding db/ crate again to Dioxus (ui-components folder) like we did for ``axum-server`` for Database table --------> cargo add --path ../db

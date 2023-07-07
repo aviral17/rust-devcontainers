@@ -1,3 +1,6 @@
+))))) To RUN axum-sever with cargo watch,  use command ---------->  cargo watch -x run
+
+
 Make sure we're in the crates/axum-server folder and add Axum to our Cargo.toml using the following command.
 
 STEPS -------> 

@@ -55,7 +55,7 @@ mod tests {
         let db_url = std::env::var("DATABASE_URL").unwrap();
         let pool = create_pool(&db_url);
 
-        let client = pool.get().await.unwrap();
+        let client = pool.get().await.unwrap();  // unwraping option<> by unwrap()
     
         let users = crate::queries::users::get_users()
             .bind(&client)

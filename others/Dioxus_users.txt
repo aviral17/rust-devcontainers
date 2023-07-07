@@ -1,0 +1,36 @@
+
+<><><> Add ui-components crates/dependencies to axum-server, by ------> cd crates/axum-server -----------> cargo add --path ../ui-components
+
+
+) Props { users: Vec<User> }
+
+The reason we are passing user: Vec<User> to the users function is because the users function is a component function that returns a string representation of the HTML table. The users function is not just a regular function that takes an argument and returns a value, it is a function that creates a component using the rsx! macro. The rsx! macro requires us to pass a Scope<Props> argument to the component function, which is how we access the props and other features of the component. The Scope<Props> argument is created by the VirtualDom::new_with_props function, which takes two arguments: a component function and a Props struct. The Props struct is where we store the properties that we want to pass to our component, such as the user: Vec<User> data. So, we are passing user: Vec<User> to the users function because that is how we store it in the Props struct and pass it to the VirtualDom::new_with_props function, which then passes it to the component function through the Scope<Props> argument.
+
+If we don’t pass user: Vec<User> to the users function, then we won’t be able to store it in the Props struct and pass it to the VirtualDom::new_with_props function, which means we won’t be able to access it in the component function through the Scope<Props> argument. If we can’t access it in the component function, then we won’t be able to use it in the rsx! macro to render the HTML table.
+
+So, passing user: Vec<User> to the users function is necessary for creating a component that uses the data in the HTML table. It is not just a regular argument that we can use directly in the function, it is a property that we need to store in the Props struct and pass to the VirtualDom::new_with_props function, which then passes it to the component function through the Scope<Props> argument.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+) VirtualDOM
+
+/* This line rebuilds the VirtualDom by applying any changes to its state or props. The VirtualDom type has a method named rebuild that takes no arguments and returns a result type. The result type indicates whether the rebuild was successful or not. If it was successful, it returns Ok with a value of true or false, indicating whether the VirtualDom was changed or not. If it was unsuccessful, it returns Err with an error value, indicating what went wrong. We don’t care about the result value in this case, so we assign it to an ""underscore"" ` _ ` variable, which means ignore it. */
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+) <'a> lifetime parameters
+
+/* The reason we haven’t used lifetime parameters here is because we don’t need them. Lifetime parameters are only needed when we have references in our types that need to be checked by the compiler. In this case, we don’t have any references in our types. We have a vector of User values, which are owned by the function and don’t depend on any other data. We also have a string slice for the title, which is a literal and has a static lifetime. So, we don’t need to specify any lifetimes for these types.
+
+However, in the layout.rs file, we had references in our types that needed to be checked by the compiler. We had a reference to a string slice for the title and a reference to an element for the children. These references could have different lifetimes depending on where they come from and how long they are valid. So, we needed to use lifetime parameters to tell the compiler how these references are related and how long they will be valid.
+
+So, in summary, we use lifetime parameters when we have references in our types that need to be checked by the compiler. We don’t use lifetime parameters when we don’t have references in our types or when they have static lifetimes.  */
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+) let _ = app.rebuild()
+
+According to the documentation of dioxus_ssr1, the let _ = app.rebuild() line is necessary to rebuild the virtual DOM before rendering it to a string. This ensures that the component is up-to-date with the latest state and props.
+
+If we omit this line, we might get an outdated or incorrect HTML output. For example, if we have some stateful logic in your component, such as a counter or a toggle, we need to rebuild the virtual DOM to reflect the changes in the state.
+
+The let _ part is just a way of ignoring the return value of the app.rebuild() method, which is a Result<(), Error>. We could also use app.rebuild().unwrap() or app.rebuild()? if we want to handle the possible error.
+
+The reason why you can’t just do app.build() is because that method is only available for components without props. Since our component takes a Props struct as an argument, we need to use new_with_props and then rebuild.

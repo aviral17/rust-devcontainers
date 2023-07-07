@@ -2,9 +2,9 @@ mod config;
 mod errors;
 
 use crate::errors::CustomError;
-use axum::{extract::Extension, response::Json, routing::get, Router};
+use axum::{response::Html, extract::Extension, routing::get, Router}; // added response::HTML here and removed response::Json,
 use std::net::SocketAddr;
-use db::User;
+// use db::User; , as we already have access to db/ folder using cargo new --path db....
 
 #[tokio::main]
 async fn main() {
@@ -27,7 +27,9 @@ async fn main() {
         .unwrap();
 }
 
-async fn users(Extension(pool): Extension<db::Pool>) -> Result<Json<Vec<User>>, CustomError> {
+// here db::Pool, Pool inside deadpool_postgres in db/src/lib.rs
+// changing from Json<Vec<User> to HTML<String>
+async fn users(Extension(pool): Extension<db::Pool>) -> Result<Html<String>, CustomError> {
     let client = pool.get().await?;
 
     let users = db::queries::users::get_users()
@@ -35,5 +37,9 @@ async fn users(Extension(pool): Extension<db::Pool>) -> Result<Json<Vec<User>>, 
         .all()
         .await?;
 
-    Ok(Json(users))
+// users = id, email from users
+// Ok(Json(users))
+    Ok(Html(ui_components::users::users(
+        users,
+    )))
 }

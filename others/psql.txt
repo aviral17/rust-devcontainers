@@ -4,7 +4,7 @@ For running postgresql (or psql) ----> cd .devcontainer --------> docker-compose
 
 Running the image specified in docker-compose.yml file --------->
 
-A) Inside ROOT folder, run -----> docker run -p 5432:5432 -e POSTGRES_PASSWORD=testpassword -e POSTGRES_HOST_AUTH_METHOD=trust postgres:14-alpine
+A) **=*=*=*--> Inside ROOT folder, run -----> docker run -p 5432:5432 -e POSTGRES_PASSWORD=testpassword -e POSTGRES_HOST_AUTH_METHOD=trust postgres:14-alpine
 B) open new Terminal now and run the rest of the below commands there
 
 ----*******-----------------************

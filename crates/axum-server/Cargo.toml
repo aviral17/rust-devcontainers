@@ -9,3 +9,4 @@ edition = "2021"
 axum = "0.6.18"
 db = { version = "0.1.0", path = "../db" }
 tokio = { version = "1.29.1", default-features = false, features = ["macros", "fs", "rt-multi-thread"] }
+ui-components = { version = "0.1.0", path = "../ui-components" }
