@@ -1,0 +1,53 @@
+
+#NOTE: #TIP: To build the .devcontainer files (docker-compose.yml and dockerfile) again -----> docker-compose -f .devcontainer/docker-compose.yml up -d --build
+
+------------------------------------------------- *************************** ------------------------------------------------- ********************** ----------------------------------------
+#TODO:   
+
+Let me try to explain it with an example. Suppose you have a host directory called worker/ that contains some files, including a package.json file. You want to run a container that can install and run the node modules specified in the package.json file. You also want to use a volume for node_modules to improve the performance of your asset pipeline.
+
+To do this, you need to write a Dockerfile and a docker-compose.yml file. In your Dockerfile, you need to create and own the node_modules directory inside the container, so that npm can write to it. For example:
+
+FROM node:latest
+WORKDIR /app
+COPY package.json /app
+RUN sudo mkdir -p /app/node_modules && sudo chown $USER:$USER /app/node_modules
+RUN npm install
+
+In your docker-compose.yml file, you need to create and mount the volume for node_modules to the container. You also need to bind mount the worker/ directory to the /app directory in the container, so that you can access the package.json file and other files. For example:
+
+version: "3"
+services:
+  app:
+    build: .
+    volumes:
+      - worker/:/app
+      - node_modules:/app/node_modules
+
+When you run docker-compose up, Docker will do the following:
+
+- Build the image from the Dockerfile, which will create and own the /app/node_modules directory and install the packages there.
+- Create an anonymous volume for node_modules and assign it a random ID.
+- Create a container from the image and mount the volumes to it.
+- Overwrite the /app/node_modules directory in the container with the contents of the volume, which are empty at first.
+- Run the default command or the command specified in the docker-compose.yml file.
+
+Now, you have a container that can use the node_modules volume for storing and accessing the packages. The volume will persist until you remove it explicitly or until no container is using it. The volume will also improve the performance of your asset pipeline by avoiding unnecessary file copying or syncing between the container and the host system.
+
+To uncomment both lines, you just need to remove the # symbol at the beginning of each line. This will make them active and not ignored by Docker. For example:
+
+FROM node:latest
+WORKDIR /app
+COPY package.json /app
+RUN sudo mkdir -p /app/node_modules && sudo chown $USER:$USER /app/node_modules # Uncomment this line
+RUN npm install
+
+version: "3"
+services:
+  app:
+    build: .
+    volumes:
+      - worker/:/app
+      - node_modules:/app/node_modules # Uncomment this line
+
+I hope this clarifies your doubts. 😊

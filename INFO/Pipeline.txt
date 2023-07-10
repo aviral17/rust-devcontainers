@@ -1,0 +1,30 @@
+#NOTE: ----> Asset Pipeline
+
+The asset pipeline provides a framework to concatenate and minify or compress JavaScript and CSS assets. It also adds the ability to write these assets in other languages and pre-processors such as Typescript and Sass.
+
+I've used Parcel on several projects and before that Webpack. I've found Parcel to be easier to use and so that is the recommendation for Nails.
+
+---------------------------- *********************************************  ************************  ----------------------------------------------------------------------------------------
+
+#NOTE: ----> Setting Up a VOLUME     (And remember that VOLUME mount can only be done in docker-compose.yml (and not in dockerfile))
+
+If you look at your .devcontainer/docker-compose.yml you'll see a line that is commented out.
+$) #- node_modules:/workspace/crates/asset-pipeline/node_modules # Set target as a volume for performance. 
+
+Comment that back in and rebuild your devcontainer. This will setup the node_modules folder as a volume and you will get way better performance during builds. This is due to the fact the node_modules folder has many files and docker tries to sync them with your main file system.
+
+Also in your .devcontainer/Dockerfile uncomment the following line.
+
+$) #RUN sudo mkdir -p /workspace/crates/asset-pipeline/node_modules && sudo chown $USERNAME:$USERNAME /workspace/crates/asset-pipeline/node_modules
+
+#TIP: REBUILD --------> docker-compose -f .devcontainer/docker-compose.yml up -d --build   (from ROOT folder obviously as we used full absolute path instead of going to cd .devcontainer) 
+
+
+
+
+---------------------------- *********************************************  ************************  ----------------------------------------------------------------------------------------
+Dockerfile and docker-compose.yml are two different files that serve different purposes in Docker. Docker is a tool that allows to run applications in isolated and portable environments called containers. To run an application in a container, I need to create an image, which is a file that contains all the necessary files and instructions for the application. To create an image, I need to write a Dockerfile, which is a plain text file that specifies the steps for building the image. A Dockerfile usually starts with a base image, such as an operating system or a framework, and then adds or modifies files, installs packages, sets environment variables, exposes ports, etc. I can use the docker build command to create an image from a Dockerfile12.
+
+However, sometimes we may want to run multiple containers that work together as a single application. For example, We may have a web server, a database, a cache, etc. To run multiple containers, we need to use docker-compose.yml, which is a YAML file that defines the services and configurations for Ir application. A docker-compose.yml file usually specifies the images or Dockerfiles for each service, the ports and volumes to expose or mount, the networks and dependencies to connect or link them, etc. We can use the docker-compose up command to start all the services at once12.
+
+So, the main difference between Dockerfile and docker-compose.yml is that Dockerfile is used to build images, while docker-compose.yml is used to run containers. I can use both files together to create and run Ir application in Docker. For example, in the project I mentioned above, I used both files for node_modules. In my Dockerfile, I created and owned the node_modules folder inside the container so that npm can install or update the packages there. In the docker-compose.yml file, I mounted the node_modules folder as a volume so that Docker does not have to copy or sync it every time I rebuild or restart the container. This way, We improved the performance of the asset pipeline by using both files

@@ -1,0 +1,4 @@
+Cache busting is where we invalidate a cached file and force the browser to retrieve the file from the server. We can instruct the browser to bypass the cache by simply changing the filename. To the browser, this is a completely new resource so it will fetch the resource from the server. The most common way to do this is to add the hash of the file to the URL.
+
+Using Ructe for Cache Busting
+Let's turn our asset-pipeline folder into a Rust crate. We do this because we can use Ructe to generate code that allows to access assets in a typesafe way. Ructe also handles hashing so that we never have to worry about the browser deploying the wrong CSS or Javascript.

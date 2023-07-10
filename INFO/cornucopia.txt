@@ -1,0 +1,6 @@
+Cornucopia is a tool powered by rust-postgres that can generate type-checked Rust interfaces from your PostgreSQL queries1234
+
+The use of cornucopia is to simplify the interaction between Rust and PostgreSQL, by allowing you to write your SQL queries first and then transpile them to Rust code on demand. This way, you can avoid using complex ORM or heavy macros, and benefit from the validation and type-checking of your queries against your schema
+
+
+Like we used for db/  so that we get SQL queries in RUST format

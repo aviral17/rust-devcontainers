@@ -1,0 +1,5 @@
+If you get permission error or during creation of any file like index.ts inside asset-pipeline, then run all these commands ----------->
+
+a) sudo chown -R $(whoami) /workspaces/rust-devcontainers/crates/asset-pipeline
+b) ls -l /workspaces/rust-devcontainers/crates/asset-pipeline
+c) sudo chown -R $(whoami) /var/lib/docker/volumes/devcontainer_node_modules/_data

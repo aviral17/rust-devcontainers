@@ -1,0 +1,58 @@
+#NOTE: 
+
+After uncommenting the node_modules and RUN lines in both files, they will be mounting/binding as follows:
+
+- In the Dockerfile, the RUN command will create and own the /workspace/crates/asset-pipeline/node_modules directory inside the image, so that npm can install or update the packages there.
+- In the docker-compose.yml file, the node_modules line will create and mount an anonymous volume for node_modules to the /workspace/crates/asset-pipeline/node_modules directory in the container. This volume will store and access the node_modules files that are installed by npm.
+- The ..:/workspace:cached line will bind mount the root-folder directory on the host system to the /workspace directory in the container, so that you can access and edit the files in your project. This bind mount will overwrite the /workspace/crates/asset-pipeline/node_modules directory in the container with the contents of the volume, which are empty at first.
+
+To summarize, you will have a container that can use the node_modules volume for storing and accessing the packages, and a bind mount for accessing and editing the project files. The volume and the bind mount will work together to improve the performance of your asset pipeline by avoiding unnecessary file copying or syncing between the container and the host system.
+
+--------------------------------------------------------- ***************************** ---------------------------------------------------------------- ************************ -----------
+
+#TODO: 
+
+Sure, I will try to explain it more clearly. The line - node_modules:/workspace/... is a named volume without a name or tag, which means it is an anonymous volume. An anonymous volume is a volume that is assigned a random ID by Docker and is not easily identifiable or manageable. An anonymous volume will be automatically removed when no container or service is using it. You can use the docker volume ls command to see the list of volumes and their IDs.
+
+The /workspace/... part is the path where the volume will be mounted in the container. This means that the files in the volume will be accessible from that path in the container. For example, if you have a file called package.json in the volume, you can access it from /workspace/crates/asset-pipeline/node_modules/package.json in the container.
+
+The overwrite part means that when you mount a volume or a bind mount to a directory in the container, the original contents of that directory will be hidden or replaced by the contents of the volume or the bind mount. For example, if you have a directory called /foo in the container that contains a file called bar.txt, and you mount a volume or a bind mount to /foo that contains a file called baz.txt, then you will only see baz.txt in /foo and not bar.txt. The bar.txt file is still there, but it is not visible or accessible because it is overwritten by the volume or the bind mount.
+
+In your case, you have a bind mount that maps the root-folder directory on the host system to the /workspace directory in the container. This means that you can see and edit the files in your project from both the host system and the container. However, you also have a volume that mounts to /workspace/crates/asset-pipeline/node_modules in the container. This means that the node_modules directory in the container will not show the files from the host system, but from the volume. The node_modules files from the host system are still there, but they are overwritten by the volume.
+
+This is useful because you don't want to copy or sync the node_modules files between the host system and the container every time you rebuild or restart the container. This can be slow and inefficient. Instead, you want to use a volume for node_modules that persists and shares the files across different containers or even different hosts. This way, you can improve the performance of your asset pipeline by using both a volume and a bind mount.
+
+I hope this makes it more clear for you. 😊
+
+--------------------------------------------------------- ***************************** ---------------------------------------------------------------- ************************ ------------
+
+
+#TIP:
+
+The original node_modules folder in the root of the project will not be affected by the volume or the bind mount. It will still be there on the host system, and you can use it for your development purposes. However, it will not be visible or accessible from the container, because it is overwritten by the volume that mounts to /workspace/crates/asset-pipeline/node_modules in the container.
+
+The volume gets the files contents from two sources: the npm install command that runs in the Dockerfile, and the npm install or update commands that you run in the container. The npm install command in the Dockerfile will install the packages specified in the package.json file to the /workspace/crates/asset-pipeline/node_modules directory in the image. This directory will be overwritten by the volume when you run docker-compose up, but the packages will still be there in the volume, because they are copied from the image to the volume. The npm install or update commands that you run in the container will also install or update the packages to the /workspace/crates/asset-pipeline/node_modules directory in the container, which is mapped to the volume. This way, the volume will store and access the node_modules files that are installed by npm.
+
+To illustrate this with an example, suppose you have a package.json file that contains these dependencies:
+
+{
+  "dependencies": {
+    "express": "^4.17.1",
+    "lodash": "^4.17.21"
+  }
+}
+
+When you run docker-compose build, Docker will do the following:
+
+- Build the image from the Dockerfile, which will create and own the /workspace/crates/asset-pipeline/node_modules directory and install express and lodash there.
+- Create an anonymous volume for node_modules and assign it a random ID.
+- Create a container from the image and mount the volumes to it.
+- Overwrite the /workspace/crates/asset-pipeline/node_modules directory in the container with the contents of the volume, which are empty at first.
+- Copy express and lodash from the image to the volume.
+
+Now, you have a container that can use express and lodash from the node_modules volume. If you want to install another package, such as axios, you can run npm install axios in the container. This will install axios to the /workspace/crates/asset-pipeline/node_modules directory in the container, which is mapped to the volume. This way, axios will also be stored and accessed from the node_modules volume.
+
+The original node_modules folder in the root of the project will not be involved in this process. It will still have express and lodash, but not axios. It will also not be visible or accessible from
+
+--------------------------------------------------------- ***************************** ---------------------------------------------------------------- ************************ ------------
+
