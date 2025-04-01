@@ -2,6 +2,8 @@ pub fn add(left: usize, right: usize) -> usize {
     left + right
 }
 
+// Updated test as per requirements
+
 #[cfg(test)]
 mod tests {
     use super::*;
