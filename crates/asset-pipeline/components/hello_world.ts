@@ -1,7 +1,7 @@
 //define a class extending HTMLElement
 class HelloWorld extends HTMLElement {
     connectedCallback () {
-      this.innerHTML = 'Hello, World!'
+      this.innerHTML = 'Hello, World! Hello RUST!'
     }
 }
 
