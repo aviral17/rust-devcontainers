@@ -52,6 +52,7 @@ async fn users(Extension(pool): Extension<db::Pool>) -> Result<Html<String>, Cus
     )))
 }
 
+// Corrected Static Path function
 async fn static_path(Path(path): Path<String>) -> impl IntoResponse {
     let path = path.trim_start_matches('/');
 
