@@ -36,6 +36,7 @@ impl IntoResponse for CustomError {
     }
 }
 
+// Add additional Errors
 impl From<axum::http::uri::InvalidUri> for CustomError {
     fn from(err: axum::http::uri::InvalidUri) -> CustomError {
         CustomError::FaultySetup(err.to_string())
