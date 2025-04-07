@@ -30,6 +30,7 @@ pub fn create_pool(database_url: &str) -> deadpool_postgres::Pool {
     deadpool_postgres::Pool::builder(manager).build().unwrap()
 }
 
+// update struct
 struct DummyTlsVerifier;
 
 impl ServerCertVerifier for DummyTlsVerifier {
