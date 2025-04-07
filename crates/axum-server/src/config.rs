@@ -8,7 +8,7 @@ pub struct Config {
 impl Config {
     pub fn new() -> Config {
         let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL not set");
-
+// update it
         Config {
             database_url,
         }
